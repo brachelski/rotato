@@ -7,12 +7,14 @@ import {
   DISABLED_BOARDS_KEY,
   DISABLED_DEV_KEY,
   TEAM_BOARDS_KEY,
-  THEME_KEY
+  THEME_KEY,
+  LOCATIONS_KEY
 } from '../utillity/constants';
 import {NgxIndexedDBService} from 'ngx-indexed-db';
 import {TeamBoard} from '../utillity/team-board';
 import {Observable, Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
+import { DevLocation } from '../utillity/dev-location';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +32,8 @@ export class LocalStorageService {
   private stickingKey = 'sticking';
   private allowSoloKey = 'allowSolo';
   private volumeKey = 'volume';
+  private locationsKey = LOCATIONS_KEY;
+  private devLocationKey = 'devLocations';
 
   constructor(
     private databaseService: NgxIndexedDBService,
@@ -82,6 +86,8 @@ export class LocalStorageService {
       boards: this.getBoards(),
       disabledBoards: this.getDisabledBoards(),
       sticking: this.getSticking(),
+      locations: this.getLocations(),
+      devLocations: this.getDevLocations(),
     };
 
     const value = JSON.stringify(teamBoard);
@@ -120,6 +126,7 @@ export class LocalStorageService {
         this.setBoards(teamBoard.boards);
         this.setDisabledBoards(teamBoard.disabledBoards);
         this.setSticking(teamBoard.sticking);
+        this.setLocations(teamBoard.locations);
       });
   }
 
@@ -176,6 +183,14 @@ export class LocalStorageService {
     return +localStorage.getItem(this.volumeKey);
   }
 
+  getLocations(): string[] {
+    return this.get(this.locationsKey) as string[];
+  }
+
+  getDevLocations(): DevLocation[] {
+    return this.get(this.devLocationKey) as DevLocation[];
+  }
+
   get(field: string): any {
     const current = localStorage.getItem(field);
     if (current) {
@@ -222,6 +237,14 @@ export class LocalStorageService {
 
   setVolume(value: number): void {
     this.set(this.volumeKey, value);
+  }
+
+  setLocations(value: string[]): void {
+    this.set(this.locationsKey, value);
+  }
+
+  setDevLocations(value: DevLocation[]): void {
+    this.set(this.devLocationKey, value);
   }
 
   set(field: string, update: any): void {

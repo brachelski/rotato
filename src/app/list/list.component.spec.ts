@@ -1,3 +1,4 @@
+import { MatMenuModule } from '@angular/material/menu';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -18,7 +19,10 @@ describe('ListComponent', () => {
   const localStorageService = {
     add: jest.fn(),
     get: jest.fn(),
-    set: jest.fn()
+    set: jest.fn(),
+    getLocations: jest.fn(),
+    getDevLocations: jest.fn(),
+    setDevLocations: jest.fn()
   };
   const soundService = {
     dropPop: jest.fn(),
@@ -45,7 +49,10 @@ describe('ListComponent', () => {
     await TestBed.configureTestingModule({
       schemas: [NO_ERRORS_SCHEMA],
       declarations: [ListComponent],
-      imports: [MatDialogModule],
+      imports: [
+        MatDialogModule,
+        MatMenuModule
+      ],
       providers: [
         {provide: LocalStorageService, useValue: localStorageService},
         {provide: SoundService, useValue: soundService},

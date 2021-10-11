@@ -1,3 +1,4 @@
+import { DevLocation } from './dev-location';
 import {CURRENT_DATA_VERSION} from './constants';
 import {Pair} from './pair';
 
@@ -11,4 +12,6 @@ export class TeamBoard {
   boards: string[];
   disabledBoards: string[];
   sticking: Pair[];
+  locations: string[];
+  devLocations: DevLocation[];
 }

@@ -10,6 +10,7 @@ export const DOUBLE_CLICK_MESSAGE = 'Double Click to Carry';
 export const DEV_KEY = 'devs';
 export const DISABLED_DEV_KEY = 'disabled';
 export const BOARDS_KEY = 'boards';
+export const LOCATIONS_KEY = 'locations';
 export const DISABLED_BOARDS_KEY = 'disabledBoards';
 export const DEV_TYPE: ListType = {
   listKey: DEV_KEY,

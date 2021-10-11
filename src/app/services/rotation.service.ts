@@ -20,6 +20,7 @@ export class RotationService {
     const disabledBoards = this.localStorageService.getDisabledBoards();
     const sticking = this.localStorageService.getSticking();
     let carryingPairs = this.getCarryingPairs();
+    const devLocatations = this.localStorageService.getDevLocations();
 
     const stickingBoards = sticking.map(pair => pair.board);
     const stickingDevs = sticking.flatMap(pair => pair.devs);

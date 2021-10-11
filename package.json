@@ -7,6 +7,7 @@
     "build": "ng build",
     "prebuild": "npm version patch",
     "test": "jest --watch",
+    "test:openHandles": "jest --detectOpenHandles",
     "test:githook": "jest",
     "lint": "npx eslint src/**/*.ts",
     "lint:fix": "npx eslint src/**/*.ts --fix",

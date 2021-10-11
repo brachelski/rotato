@@ -39,6 +39,22 @@
     </div>
     <div>
       <button
+       *ngIf="type.listKey === 'devs'"
+       mat-mini-fab
+       class="mat-elevation-z0"
+       [matMenuTriggerFor]="locationMenu">
+      {{handleLocationLetterForDev(item)}}
+      </button>
+      <mat-menu #locationMenu="matMenu">
+        <mat-option
+         mat-menu-item
+         (click)="setLocationForDev(item, location)"
+         *ngFor="let location of locations">
+          {{location}}
+        </mat-option>
+        <button mat-menu-item *ngIf="shouldShowRemoveLocation(item)" (click)="removeDevLocation(item)">Remove Location</button>
+      </mat-menu>
+      <button
         class="icon-button"
         [attr.aria-label]="'Rename '+type.typeName"
         mat-icon-button

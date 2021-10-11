@@ -38,6 +38,8 @@ import {ScreenshotComponent} from './screenshot/screenshot.component';
 import {ListComponent} from './list/list.component';
 import {MatSliderModule} from '@angular/material/slider';
 import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
+import { LocationsComponent } from './locations/locations.component';
+import { MatChipsModule } from '@angular/material/chips';
 
 @NgModule({
   declarations: [
@@ -54,6 +56,7 @@ import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
     ScreenshotComponent,
     ListComponent,
     EditDialogComponent,
+    LocationsComponent,
   ],
   imports: [
     BrowserModule,
@@ -63,6 +66,7 @@ import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
     HammerModule,
     MatButtonModule,
     MatCardModule,
+    MatChipsModule,
     MatDialogModule,
     MatInputModule,
     MatMenuModule,

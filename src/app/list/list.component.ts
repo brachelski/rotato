@@ -1,4 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { DevLocation } from './../utillity/dev-location';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {BACK_BURNER_MESSAGE, DEV_TYPE, BOARD_TYPE, DELETE_BUTTON_TEXT} from '../utillity/constants';
 import {LocalStorageService} from '../services/local-storage.service';
 import {SoundService} from '../services/sound.service';
@@ -10,6 +11,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { DevService } from '../services/dev.service';
 import { BoardService } from '../services/board.service';
 import { RefreshService } from '../services/refresh.service';
+import { DEV_KEY } from '../utillity/constants';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-list',
@@ -24,6 +27,8 @@ export class ListComponent implements OnInit {
 
   list: string[];
   disabledList: string[];
+  locations: string[];
+  devLocations: DevLocation[];
 
   deleteText = DELETE_BUTTON_TEXT;
   backBurnerMessage = BACK_BURNER_MESSAGE;
@@ -40,6 +45,9 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.refreshService.onRefresh().pipe(
+      tap(() => this.loadData())
+    ).subscribe();
     this.loadData();
   }
 
@@ -134,9 +142,50 @@ export class ListComponent implements OnInit {
     this.loadData();
     this.refreshService.triggerRefresh();
   }
+  
+  // TODO: Need to update locations here as they are added and removed.
+  // Only show remove location if location is present
+  // rotate by office feature
+
+  // Merge all changes into fork repo
+
+  setLocationForDev(dev: string, location: string) {
+    if (this.devLocations.filter(dl => dl.dev === dev).length > 0) {
+      console.log('EXISTING: ', dev);
+      const updatedDevLocations = this.devLocations.filter(dl => dl.dev !== dev);
+      this.devLocations = updatedDevLocations;
+      this.localStorageService.setDevLocations(updatedDevLocations);
+    }
+    this.devLocations.push({dev, location});
+    this.localStorageService.setDevLocations(this.devLocations);
+    this.soundService.dropPop();
+    this.refreshService.triggerRefresh();
+  }
+
+  removeDevLocation(dev: string) {
+    const updatedDevLocations = this.devLocations.filter(dl => dl.dev !== dev);
+    this.devLocations = updatedDevLocations;
+    this.localStorageService.setDevLocations(updatedDevLocations);
+    this.soundService.doAYeet();
+    this.refreshService.triggerRefresh();
+  }
+
+  handleLocationLetterForDev(dev: string): string {
+    const devMaybe = this.devLocations.filter(devs => devs.dev === dev)[0];
+
+    return devMaybe ? devMaybe.location.split(/\s/).reduce((response,word)=> response+=word.slice(0,1),'').toUpperCase() : '?';
+  }
+
+  shouldShowRemoveLocation(dev: string): boolean {
+    return this.devLocations?.filter(dl => dl.dev === dev).length > 0 ? true : false;
+  }
 
   private loadData(): void {
     this.list = this.localStorageService.get(this.type.listKey);
     this.disabledList = this.localStorageService.get(this.type.disabledKey);
+    if (this.type.listKey === DEV_KEY) {
+      this.devLocations = this.localStorageService.getDevLocations();
+      this.locations = this.localStorageService.getLocations();;
+    }
   }
 }
