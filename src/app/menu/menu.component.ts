@@ -35,6 +35,8 @@ export class MenuComponent implements OnInit {
   private boardName: string;
   allowSolo: boolean;
   allowSoloText = 'Allow Solo';
+  pairByLocation: boolean;
+  pairByLocationText = 'Location Based Pairing'
   volume: number;
 
   constructor(
@@ -51,6 +53,7 @@ export class MenuComponent implements OnInit {
   ngOnInit(): void {
     this.enableSound = this.soundService.soundEnabled;
     this.allowSolo = this.localStorageService.getAllowSolo();
+    this.pairByLocation = this.localStorageService.getPairByLocation();
     this.volume = this.localStorageService.getVolume();
     this.localStorageService.getTeamBoards()
       .subscribe(boards => this.teamBoards = boards);
@@ -116,6 +119,10 @@ export class MenuComponent implements OnInit {
 
   handleAllowSolo(event: MatCheckboxChange): void {
     this.localStorageService.setAllowSolo(event.checked);
+  }
+
+  handlePairByLocation(event: MatCheckboxChange): void {
+    this.localStorageService.setPairByLocation(event.checked);
   }
 
   handleSound($event: MatSliderChange): void {

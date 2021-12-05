@@ -25,6 +25,10 @@ export function delay(ms: number): Promise<unknown> {
   );
 }
 
+export function distinct(value, index, self) {
+  return self.indexOf(value) === index;
+}
+
 export function arraysAreEqual(a: any[], b: any[] ): boolean
 {
   if (a.length !== b.length) {

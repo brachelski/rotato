@@ -31,6 +31,7 @@ export class LocalStorageService {
   private versionKey = 'version';
   private stickingKey = 'sticking';
   private allowSoloKey = 'allowSolo';
+  private pairByLocationKey = 'pairByLocation'
   private volumeKey = 'volume';
   private locationsKey = LOCATIONS_KEY;
   private devLocationKey = 'devLocations';
@@ -151,6 +152,10 @@ export class LocalStorageService {
     return this.get(this.allowSoloKey) as boolean;
   }
 
+  getPairByLocation(): boolean {
+    return this.get(this.pairByLocationKey).length === 0 ? false : this.get(this.pairByLocationKey) as boolean;
+  }
+
   getPairs(): Pair[] {
     return this.get(this.pairsKey) as Pair[];
   }
@@ -201,6 +206,10 @@ export class LocalStorageService {
 
   setAllowSolo(value: boolean): void {
     this.set(this.allowSoloKey, value);
+  }
+
+  setPairByLocation(value: boolean): void {
+    this.set(this.pairByLocationKey, value);
   }
 
   setDevs(devs: string[]): void {

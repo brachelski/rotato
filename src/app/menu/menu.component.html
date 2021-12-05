@@ -67,6 +67,13 @@
       {{allowSoloText}}
     </mat-checkbox>
   </div>
+  <div>
+    <mat-checkbox
+      [checked]="pairByLocation"
+      (change)="handlePairByLocation($event)">
+      {{pairByLocationText}}
+    </mat-checkbox>
+  </div>
   <a
     href="https://github.com/BlakeRhodes/rotato"
     mat-menu-item

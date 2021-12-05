@@ -1,5 +1,5 @@
 <mat-form-field appearance="fill">
-    <mat-label>Office Locations</mat-label>
+    <mat-label>Developer Locations</mat-label>
     <mat-chip-list #chipList>
         <mat-chip *ngFor="let location of locations" [selectable]="selectable" [removable]="removable"
             (removed)="remove(location)" color="accent">
